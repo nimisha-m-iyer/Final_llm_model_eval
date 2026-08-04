@@ -1,0 +1,9 @@
+transformers>=4.45.0
+torch>=2.2.0
+datasets>=2.19.0
+accelerate>=0.30.0
+sentencepiece
+huggingface_hub
+scikit-learn>=1.4.0
+bitsandbytes>=0.43.0
+openai>=1.30.0
