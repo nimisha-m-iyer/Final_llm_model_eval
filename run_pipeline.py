@@ -27,7 +27,7 @@ CONFIG = {
     "mode": "demo",
 
     # only used when mode == "demo"
-    "demo_text": "nee bayangara mosham manushyan aan",
+    "demo_text": "you are stupid",
 
     # ---- MODEL ----
     # Swap models here. Examples that already work:
