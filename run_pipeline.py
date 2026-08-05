@@ -49,7 +49,9 @@ CONFIG = {
 
     # ---- DATASET (only used when mode == "full_eval") ----
     "dataset": {
-        "name": "mangalathkedar/multilingual-indic-profane",
+        "source": "huggingface",   # or "csv"
+        "name": "mangalathkedar/multilingual-indic-profane",   # used if source == "huggingface"
+        "path": "outputs/my_test_set.csv",                      # used if source == "csv"
         "split": "train",
         "streaming": True,
         "text_column": None,       # None = auto-detect
