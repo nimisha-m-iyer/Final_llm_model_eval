@@ -51,7 +51,7 @@ CONFIG = {
     "dataset": {
         "source": "huggingface",   # or "csv"
         "name": "mangalathkedar/multilingual-indic-profane",   # used if source == "huggingface"
-        "path": "outputs/my_test_set.csv",                      # used if source == "csv"
+        "path": None,                      # used if source == "csv"
         "split": "train",
         "streaming": True,
         "text_column": None,       # None = auto-detect
@@ -158,7 +158,7 @@ def run_demo(config):
 
 
 def run_full_eval(config):
-    from data.hf_dataset_loader import load_streaming_dataset
+    from data.hf_dataset_loader import load_dataset_for_eval   # <- changed
     from models.model_factory import load_model
     from evaluator.evaluators import run_evaluation
     from utils.git_push import push_outputs_to_github
@@ -167,10 +167,10 @@ def run_full_eval(config):
     print("FULL EVALUATION MODE")
     print(f"Experiment: {config['experiment_name']}")
     print(f"Model: {config['model']['name']}")
-    print(f"Dataset: {config['dataset']['name']}")
+    print(f"Dataset source: {config['dataset'].get('source', 'huggingface')}")
     print("=" * 70)
 
-    dataset = load_streaming_dataset(config)
+    dataset = load_dataset_for_eval(config)   # <- changed
     model = load_model(config)
     metrics = run_evaluation(config, model, dataset)
 
