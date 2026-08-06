@@ -1,7 +1,10 @@
 """
-Routes config["model"]["name"] to the correct wrapper. Add a new model
-family by adding one subclass + one line here. Anything unregistered
-falls back to the generic local HFChatModel.
+Selects a model wrapper class purely from config["model"]["name"].
+
+To add a new model family: if it needs no special handling beyond the
+generic chat pattern, it already works via the HFChatModel fallback. If
+it needs a quirk, add a small subclass in models/<name>.py and register
+it below. evaluator.py and run_pipeline.py never need to change either way.
 """
 
 from typing import Any, Dict
@@ -10,6 +13,7 @@ from models.aya import AyaModel
 from models.base_model import BaseModel
 from models.gemma import GemmaModel
 from models.hf_chat_model import HFChatModel
+from models.llama import LlamaModel
 from models.openai_model import OpenAIModel
 from models.qwen import QwenModel
 
@@ -17,8 +21,8 @@ _REGISTRY = {
     "gemma": GemmaModel,
     "aya": AyaModel,
     "qwen": QwenModel,
+    "llama": LlamaModel,
     "gpt": OpenAIModel,
-    # "llama": LlamaModel,
     # "sarvam": SarvamModel,
 }
 
