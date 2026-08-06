@@ -19,49 +19,31 @@ sys.path.insert(0, REPO_ROOT)
 # 1. EDIT THIS CONFIG BLOCK — everything you need to change lives here
 # ======================================================================
 CONFIG = {
-    "experiment_name": "gemma_profanity_demo",
+    "experiment_name": "llama31_8b_profanity",
+    "mode": "full_eval",          # or "demo" to test one sentence first
+    "demo_text": "നീ ഒരു മൈരൻ ആണ്.",
 
-    # ---- MODE ----
-    # "demo"      -> type ONE sentence, see the full prompt + output right now
-    # "full_eval" -> run the whole dataset, save CSV+JSON, push to GitHub
-    "mode": "demo",
-
-    # only used when mode == "demo"
-    "demo_text": "you are stupid",
-
-    # ---- MODEL ----
-    # Swap models here. Examples that already work:
-    #   "google/gemma-3-4b-it"
-    #   "CohereLabs/aya-expanse-8b"
-    #   "Qwen/Qwen3-4B-Instruct-2507"
-    #   "gpt-4o-mini"                <- routes to OpenAI API automatically
     "model": {
-        "name": "google/gemma-3-4b-it",
+        "name": "meta-llama/Llama-3.1-8B-Instruct",
         "torch_dtype": "bfloat16",
         "device_map": "auto",
         "trust_remote_code": False,
-        "load_in_4bit": False,
+        "load_in_4bit": False,     # 8B in bf16 fits a single T4 fine
     },
 
-    # per-sample generation timeout (seconds) — stops one bad sample
-    # from hanging the whole run
     "generation_timeout_seconds": 60,
 
-    # ---- DATASET (only used when mode == "full_eval") ----
     "dataset": {
-        "source": "huggingface",   # or "csv"
-        "name": "mangalathkedar/multilingual-indic-profane",   # used if source == "huggingface"
-        "path": None,                      # used if source == "csv"
+        "source": "huggingface",
+        "name": "mangalathkedar/multilingual-indic-profane",
+        "path": None,
         "split": "train",
         "streaming": True,
-        "text_column": None,       # None = auto-detect
-        "label_column": None,      # None = auto-detect
-        "language_column": None,   # None = auto-detect; if dataset has no
-                                    # language column, script detection
-                                    # kicks in automatically (fallback)
+        "text_column": None,
+        "label_column": None,
+        "language_column": None,
     },
 
-    # ---- PROMPT ----
     "prompt": {
         "system_prompt": (
             "You are an expert multilingual profanity detection system. "
@@ -78,24 +60,20 @@ CONFIG = {
         ),
     },
 
-    # ---- GENERATION ----
     "generation": {
         "max_new_tokens": 8,
         "do_sample": False,
     },
 
-    # ---- EVALUATION (only used when mode == "full_eval") ----
     "evaluation": {
-        "max_samples": None,   # None = full dataset, or an int to cap it
+        "max_samples": None,
     },
 
-    # ---- OUTPUT (only used when mode == "full_eval") ----
     "output": {
-        "prediction_file": "outputs/gemma_predictions.csv",
-        "metric_file": "outputs/gemma_metrics.json",
+        "prediction_file": "outputs/llama31_predictions.csv",
+        "metric_file": "outputs/llama31_metrics.json",
     },
 
-    # ---- AUTO-PUSH TO GITHUB (only used when mode == "full_eval") ----
     "auto_push_to_github": True,
 }
 # ======================================================================
