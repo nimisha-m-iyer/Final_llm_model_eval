@@ -20,7 +20,7 @@ sys.path.insert(0, REPO_ROOT)
 # ======================================================================
 CONFIG = {
     "experiment_name": "llama31_8b_profanity",
-    "mode": "full_eval",          # or "demo" to test one sentence first
+    "mode": "demo",          # or "demo" to test one sentence first
     "demo_text": "നീ ഒരു മൈരൻ ആണ്.",
 
     "model": {
